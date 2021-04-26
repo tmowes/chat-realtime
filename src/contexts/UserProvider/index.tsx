@@ -2,14 +2,14 @@ import { createContext, useContext } from 'react'
 
 import { v4 as uuidV4 } from 'uuid'
 
+import { useLocalStorage } from '../LocalStorageProvider/useLocalStorage'
 import { UserContextData, UserProviderProps } from './types'
-import { useLocalStorage } from './useLocalStorage'
 
 export const UserContext = createContext({} as UserContextData)
 
 export const UserProvider = (props: UserProviderProps) => {
   const { children } = props
-  const [userId, setUserId] = useLocalStorage('id')
+  const [userId, setUserId] = useLocalStorage('id', '')
 
   const generateNewID = () => {
     setUserId(uuidV4())

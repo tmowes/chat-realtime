@@ -1,4 +1,4 @@
-import { Flex, Text } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 
 import * as C from '~/components'
 import { useUser } from '~/contexts'
@@ -9,16 +9,16 @@ export default function Login() {
   return (
     <>
       <C.MetaTags />
-      <Flex w="100vw" h="100vh" align="center" justify="center">
+      <Flex w="100vw" h="100vh">
         {userId ? (
-          <Text fontSize="0.8rem" lineHeight="1" mt="2">
-            {userId}
-          </Text>
+          <C.Sidebar id={userId} />
         ) : (
-          <C.LoginForm
-            handleGenerateNewID={generateNewID}
-            handleUserId={setUserId}
-          />
+          <Flex w="100vw" h="100vh" align="center" justify="center">
+            <C.LoginForm
+              handleGenerateNewID={generateNewID}
+              handleUserId={setUserId}
+            />
+          </Flex>
         )}
       </Flex>
     </>
