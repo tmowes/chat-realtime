@@ -11,12 +11,15 @@ export const useLocalStorage = <TypeState>(
 
   const [value, setValue] = useState<TypeState>(() => {
     if (typeof window !== 'undefined') {
-      console.log('useEffect (typeof window !== undefine)')
+      console.log('getItem (typeof window !== undefined)')
       const jsonValue = window.localStorage.getItem(STORAGE_PREFIXED_KEY)
-      if (!jsonValue) {
+      if (jsonValue) {
+        console.log('(jsonValue)')
+
         setLoadingStorage(false)
         return JSON.parse(jsonValue)
       }
+
       if (typeof initialValue === 'function') {
         setLoadingStorage(false)
         return initialValue()
@@ -24,7 +27,6 @@ export const useLocalStorage = <TypeState>(
       setLoadingStorage(false)
       return initialValue
     }
-    setLoadingStorage(true)
   })
 
   // const [value, setValue] = useState<TypeState>()
@@ -48,7 +50,6 @@ export const useLocalStorage = <TypeState>(
 
   useEffect(() => {
     if (!loadingStorage && typeof window !== 'undefined') {
-      console.log('setItem (typeof window !== undefine)', loadingStorage)
       localStorage.setItem(STORAGE_PREFIXED_KEY, JSON.stringify(value))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
