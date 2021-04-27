@@ -6,25 +6,24 @@ import { Flex } from '@chakra-ui/react'
 import * as C from '~/components'
 import { useUser } from '~/contexts'
 
-export default function Home() {
-  const { userId } = useUser()
+export default function Login() {
+  const { userId, setUserId, generateNewID } = useUser()
   const { push } = useRouter()
 
   useEffect(() => {
-    if (!userId) {
-      push('/login')
+    if (userId) {
+      push('/')
     }
   }, [push, userId])
-
-  if (!userId) return <Flex />
 
   return (
     <div>
       <C.MetaTags />
-      <Flex w="100vw" h="100vh">
-        <Flex>
-          <C.Sidebar />
-        </Flex>
+      <Flex w="100vw" h="100vh" align="center" justify="center">
+        <C.LoginForm
+          handleGenerateNewID={generateNewID}
+          handleUserId={setUserId}
+        />
       </Flex>
     </div>
   )

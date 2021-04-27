@@ -9,17 +9,14 @@ export const useLocalStorage = <TypeState>(
   const STORAGE_PREFIXED_KEY = `${STORAGE_PREFIX}:${key}`
   const [loadingStorage, setLoadingStorage] = useState(true)
 
+  // eslint-disable-next-line consistent-return
   const [value, setValue] = useState<TypeState>(() => {
     if (typeof window !== 'undefined') {
-      console.log('getItem (typeof window !== undefined)')
       const jsonValue = window.localStorage.getItem(STORAGE_PREFIXED_KEY)
       if (jsonValue) {
-        console.log('(jsonValue)')
-
         setLoadingStorage(false)
         return JSON.parse(jsonValue)
       }
-
       if (typeof initialValue === 'function') {
         setLoadingStorage(false)
         return initialValue()
@@ -28,25 +25,6 @@ export const useLocalStorage = <TypeState>(
       return initialValue
     }
   })
-
-  // const [value, setValue] = useState<TypeState>()
-
-  // useEffect(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const jsonValue =
-  //       !!window && window.localStorage.getItem(STORAGE_PREFIXED_KEY)
-  //     if (!jsonValue) {
-  //       setValue(JSON.parse(jsonValue))
-  //       return
-  //     }
-  //     if (typeof initialValue === 'function') {
-  //       setValue(initialValue())
-  //       return
-  //     }
-  //     setValue(initialValue)
-  //   }
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [STORAGE_PREFIXED_KEY])
 
   useEffect(() => {
     if (!loadingStorage && typeof window !== 'undefined') {

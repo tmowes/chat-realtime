@@ -8,12 +8,14 @@ import {
   Text,
 } from '@chakra-ui/react'
 
+import { useUser } from '~/contexts'
+
 import { ContactTabPanel } from './ContactTabPanel'
 import { ConversationTabPanel } from './ConversationTabPanel'
-import { SideBarProps } from './types'
 
-export const Sidebar = (props: SideBarProps) => {
-  const { id } = props
+export const Sidebar = () => {
+  const { userId } = useUser()
+
   return (
     <Flex
       bg="gray.500"
@@ -47,7 +49,7 @@ export const Sidebar = (props: SideBarProps) => {
       </Tabs>
       <Flex direction="column" w="100%" align="center" p="1" my="2">
         <Text fontSize="0.68rem" lineHeight="1" mb="1">
-          {`ID: ${id}`}
+          {`ID: ${userId}`}
         </Text>
       </Flex>
     </Flex>
