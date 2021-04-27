@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 
 import { Flex } from '@chakra-ui/react'
 
+import { myResult } from '~/utils/myPositions.js'
 import * as C from '~/components'
 import { useUser } from '~/contexts'
 
@@ -14,6 +15,7 @@ export default function Home() {
     if (!userId) {
       push('/login')
     }
+    console.log(JSON.stringify(myResult))
   }, [push, userId])
 
   if (!userId) return <Flex />
@@ -22,9 +24,7 @@ export default function Home() {
     <div>
       <C.MetaTags />
       <Flex w="100vw" h="100vh">
-        <Flex>
-          <C.Sidebar />
-        </Flex>
+        <C.Sidebar />
       </Flex>
     </div>
   )
