@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 
 import {
   Button,
@@ -15,19 +15,23 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 
-import { useContacts } from '~/contexts'
+import { useContacts, useConversations } from '~/contexts'
 
 export const ConversationModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [checkedItems, setCheckedItems] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { contacts } = useContacts()
+  const { createConversation } = useConversations()
 
-  const handleNewConversation = async () => {
+  const handleNewConversation = async (e: FormEvent) => {
+    e.preventDefault()
     setIsSubmitting(true)
     await new Promise(resolve => setTimeout(resolve, 1000))
 
-    console.log('New Contact', {})
+    createConversation({ recipients: checkedItems })
+
+    console.log('New Contact', { checkedItems })
     setIsSubmitting(false)
 
     onClose()
@@ -64,8 +68,10 @@ export const ConversationModal = () => {
                   <Checkbox
                     key={id}
                     colorScheme="orange"
+                    isChecked={checkedItems.includes(id)}
                     onChange={() => handleCheckBoxChange(id)}
                   >
+                    {id}
                     {name}
                   </Checkbox>
                 ))}
