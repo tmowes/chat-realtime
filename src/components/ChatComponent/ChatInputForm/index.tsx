@@ -1,42 +1,45 @@
-import { useState } from 'react'
-
 import { Button, Flex, Icon } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { RiSendPlaneFill } from 'react-icons/ri'
 
 import { Textarea } from '~/components/Form'
-import { NewMessageFormData } from '~/contexts'
+import { NewMessageFormData, useConversations } from '~/contexts'
 import { newMessageSchema } from '~/utils'
 
 export const ChatInputForm = () => {
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(newMessageSchema),
   })
 
-  const [inputValue, setInputValue] = useState('')
+  const { sendMessage, selectedConversation } = useConversations()
 
   const { errors, isSubmitting } = formState
 
-  const handleNewMessage = async ({ message }: NewMessageFormData) => {
+  const handleNewMessage = async ({ text }: NewMessageFormData) => {
     await new Promise(resolve => setTimeout(resolve, 1000))
-    console.log('New Message', { message })
+
+    sendMessage({
+      recipients: selectedConversation.recipients,
+      text,
+    })
+
+    reset({ text: '' })
   }
 
   return (
     <Flex
       as="form"
-      mx="8"
+      mx="4"
+      mr="6"
       align="center"
       onSubmit={handleSubmit(handleNewMessage)}
     >
       <Textarea
-        name="message"
+        name="text"
         resize="none"
-        error={errors.message}
-        value={inputValue}
-        onChange={e => setInputValue(e.target.value)}
-        {...register('message')}
+        error={errors.text}
+        {...register('text')}
         css={{
           '&::-webkit-scrollbar': {
             width: '8px',
@@ -53,7 +56,7 @@ export const ChatInputForm = () => {
       <Button
         isLoading={isSubmitting}
         type="submit"
-        colorScheme="orange"
+        colorScheme="blackAlpha"
         mr="auto"
         p="8"
       >

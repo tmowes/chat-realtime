@@ -22,7 +22,7 @@ export const ContactModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { createContact } = useContacts()
 
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(newContactSchema),
   })
 
@@ -32,6 +32,10 @@ export const ContactModal = () => {
     await new Promise(resolve => setTimeout(resolve, 1000))
     createContact({ id, name })
     console.log('New Contact', { id, name })
+    reset({
+      id: '',
+      name: '',
+    })
     onClose()
   }
 

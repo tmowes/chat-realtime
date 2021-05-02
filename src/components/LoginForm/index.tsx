@@ -10,7 +10,7 @@ import { LoginFormProps } from './types'
 
 export const LoginForm = (props: LoginFormProps) => {
   const { handleGenerateNewID, handleUserId } = props
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(signInSchema),
   })
 
@@ -19,6 +19,7 @@ export const LoginForm = (props: LoginFormProps) => {
   const handleSignIn = async ({ id }: SignInFormData) => {
     await new Promise(resolve => setTimeout(resolve, 1000))
     handleUserId(id)
+    reset({ id: '' })
   }
 
   return (
