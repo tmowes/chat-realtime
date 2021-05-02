@@ -9,3 +9,4 @@ export type {
   CreateContactFormData,
   CreateConversationFormData,
 } from './ContactsProvider/types'
+export type { NewMessageFormData } from './ConversationsProvider/types'

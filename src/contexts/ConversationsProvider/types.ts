@@ -1,8 +1,11 @@
-import { ReactNode } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 export type ConversationsContextData = {
-  conversations: Conversation[]
+  conversations: FormattedConversation[]
   createConversation: ({ recipients }: CreateConversationFormData) => void
+  activeConversation: number
+  setActiveConversation: Dispatch<SetStateAction<number>>
+  selectedConversation: Conversation
 }
 
 export type ConversationsProviderProps = {
@@ -10,10 +13,24 @@ export type ConversationsProviderProps = {
 }
 
 export type Conversation = {
-  recipients: string[]
+  recipients: Recipient[]
   messages: string[]
 }
 
 export type CreateConversationFormData = {
-  recipients: string[]
+  recipients: Recipient[]
+}
+
+type FormattedConversation = {
+  recipients: Recipient[]
+  messages: string[]
+}
+
+type Recipient = {
+  id: string
+  name: string
+}
+
+export type NewMessageFormData = {
+  message: string
 }

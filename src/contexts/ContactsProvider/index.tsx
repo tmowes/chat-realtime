@@ -2,6 +2,7 @@ import { createContext, useContext } from 'react'
 
 import { useLocalStorage } from '../LocalStorageProvider/useLocalStorage'
 import {
+  Contact,
   ContactsContextData,
   ContactsProviderProps,
   CreateContactFormData,
@@ -11,7 +12,7 @@ export const ContactsContext = createContext({} as ContactsContextData)
 
 export const ContactsProvider = (props: ContactsProviderProps) => {
   const { children } = props
-  const [contacts, setContacts] = useLocalStorage('contacts', [])
+  const [contacts, setContacts] = useLocalStorage('contacts', [] as Contact[])
 
   const createContact = ({ id, name }: CreateContactFormData) => {
     setContacts(prev => [...prev, { id, name }])

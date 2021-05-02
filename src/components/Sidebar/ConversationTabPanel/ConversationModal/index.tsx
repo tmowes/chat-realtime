@@ -28,10 +28,14 @@ export const ConversationModal = () => {
     e.preventDefault()
     setIsSubmitting(true)
     await new Promise(resolve => setTimeout(resolve, 1000))
+    const recipients = checkedItems.map(checkedItem =>
+      contacts.find(({ id }) => id === checkedItem)
+    )
 
-    createConversation({ recipients: checkedItems })
+    createConversation({ recipients })
 
-    console.log('New Contact', { checkedItems })
+    console.log('New Conversation -checkedItems', { checkedItems })
+    console.log('New Conversation -recipients', { recipients })
     setIsSubmitting(false)
 
     onClose()

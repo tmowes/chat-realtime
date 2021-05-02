@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 import { useLocalStorage } from '../LocalStorageProvider/useLocalStorage'
 import {
@@ -19,6 +19,8 @@ export const ConversationsProvider = (props: ConversationsProviderProps) => {
     [] as Conversation[]
   )
 
+  const [activeConversation, setActiveConversation] = useState(0)
+
   const createConversation = ({ recipients }: CreateConversationFormData) => {
     setConversations(prev => [...prev, { recipients, messages: [] }])
   }
@@ -26,6 +28,9 @@ export const ConversationsProvider = (props: ConversationsProviderProps) => {
   const provideValues = {
     conversations,
     createConversation,
+    activeConversation,
+    setActiveConversation,
+    selectedConversation: conversations?.[activeConversation],
   }
 
   return (

@@ -4,11 +4,12 @@ import { useRouter } from 'next/router'
 import { Flex } from '@chakra-ui/react'
 
 import * as C from '~/components'
-import { useUser } from '~/contexts'
+import { useConversations, useUser } from '~/contexts'
 
 export default function Home() {
   const { userId } = useUser()
   const { push } = useRouter()
+  const { selectedConversation } = useConversations()
 
   useEffect(() => {
     if (!userId) {
@@ -23,6 +24,7 @@ export default function Home() {
       <C.MetaTags />
       <Flex w="100vw" h="100vh">
         <C.Sidebar />
+        {selectedConversation && <C.ChatComponent />}
       </Flex>
     </div>
   )
